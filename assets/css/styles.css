@@ -1,0 +1,483 @@
+/* ===== Layout ===== */
+html,
+body,
+#map {
+  height: 100%;
+  margin: 0;
+}
+
+/* High‑contrast focus for accessibility */
+:focus {
+  outline: 2px dashed #333;
+  outline-offset: 2px;
+}
+
+/* Controls panel */
+#controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  flex-wrap: wrap;
+  max-width: 320px;
+}
+
+/* Mode buttons container */
+.mode-buttons {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+/* Individual mode button */
+.mode-btn {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f1f5f9; /* slate‑100 */
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.mode-btn:hover {
+  background: #e2e8f0; /* slate‑200 */
+  transform: translateY(-1px);
+}
+/* Active state: support both aria-pressed and aria-checked for toggle and radio semantics. */
+.mode-btn[aria-pressed="true"],
+.mode-btn[aria-checked="true"] {
+  background: #3b82f6; /* blue‑500 */
+  color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+/* Input groups for each mode */
+.mode-inputs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.mode-inputs[hidden] {
+  display: none !important;
+}
+
+/* DMS group styling */
+.dms-group {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+/* Input field styling */
+.mode-inputs input {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.mode-inputs input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Ensure numeric inputs align nicely */
+#dualDecInputs input,
+#dmsBoxesInputs input {
+  width: 80px;
+  max-width: 20vw;
+}
+
+/* Single input fields take more space */
+#singleDecInput,
+#singleDmsInput {
+  width: 240px;
+  max-width: 90vw;
+}
+
+/* Flip button styling */
+#flipDecBtn {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+#flipDecBtn:hover {
+  background: #eef2f7;
+  transform: translateY(-1px);
+}
+#flipDecBtn:active {
+  transform: translateY(0);
+}
+
+/* Locate/Clear buttons */
+#locateBtn,
+#clearBtn {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+#locateBtn {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+#locateBtn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+#clearBtn:hover {
+  background: #eef2f7;
+  transform: translateY(-1px);
+}
+
+/* Screen‑reader only text */
+.sr-only {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Map container */
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+/* Layer panel */
+.layer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 260px;
+  z-index: 1001;
+  background: #ffffff;
+  padding: 8px 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+.layer-panel.collapsed {
+  transform: translateX(-260px);
+  pointer-events: none;
+  visibility: hidden;
+}
+.layer-panel.collapsed #layerContent {
+  display: none;
+}
+.layer-panel .layer-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+.layer-panel .layer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 2px 0;
+}
+.layer-panel .toggle-item-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.layer-panel .toggle-item-btn[aria-expanded="false"] {
+  transform: rotate(-90deg);
+}
+.layer-panel .layer-content {
+  padding-left: 8px;
+}
+
+/* Points list styling */
+#pointsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.point-item {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 4px;
+  background: #f8fafc;
+}
+.point-item.selected {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+.point-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.point-header span {
+  flex-grow: 1;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.point-header button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+}
+.point-edit {
+  margin-top: 6px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+.point-edit label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.point-edit input[type="text"],
+.point-edit input[type="number"],
+.point-edit input[type="color"],
+.point-edit input[type="range"],
+.point-edit select {
+  flex-grow: 1;
+  height: 28px;
+  font-size: 13px;
+}
+.point-edit input[type="range"] {
+  height: auto;
+}
+.point-edit button {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 4px 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-size: 13px;
+}
+.point-edit button:hover {
+  background: #e2e8f0;
+}
+.points-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* Selection mode cursor */
+.selection-mode #map {
+  cursor: crosshair;
+}
+
+/* Dark mode adjustments for new elements */
+body.dark-mode .layer-panel .point-item {
+  background: #374151;
+  border-color: #4b5563;
+}
+body.dark-mode .layer-panel .point-item.selected {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
+}
+body.dark-mode .point-edit button {
+  background: #4b5563;
+  border-color: #6b7280;
+  color: #e5e7eb;
+}
+.layer-panel button#toggleLayerPanel {
+  position: absolute;
+  top: 8px;
+  right: -20px;
+  font-size: 14px;
+}
+.style-group {
+  display: flex;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+/* Tooltip style override */
+.leaflet-tooltip.custom-tooltip {
+  background: var(--label-bg-color, #ffffff);
+  border: 1px solid #a3a3a3;
+  color: var(--label-text-color, #111827);
+  padding: 2px 6px;
+  font-size: var(--label-font-size, 14px);
+  font-family: var(--label-font-family, system-ui, -apple-system, sans-serif);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced popup styling for coordinate markers */
+.leaflet-popup-content {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.4;
+}
+
+.leaflet-popup-content strong {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Hover highlight is handled via setStyle in JS; this class is here if you need a CSS‑only fallback */
+.feature-hover {
+  outline: 2px solid rgba(251, 146, 60, 0.95);
+}
+
+/* Toast (lightweight) with better visibility */
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  background: rgba(17, 24, 39, 0.95);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  #controls {
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    max-width: none;
+  }
+
+  .mode-buttons {
+    justify-content: center;
+  }
+
+  .mode-btn {
+    font-size: 12px;
+    padding: 0 8px;
+  }
+
+  #singleDecInput,
+  #singleDmsInput {
+    width: 100%;
+    max-width: none;
+  }
+
+  #dualDecInputs input,
+  #dmsBoxesInputs input {
+    width: 70px;
+  }
+}
+
+/* Ensure markers are always visible above polygons */
+.leaflet-marker-pane {
+  z-index: 600;
+}
+
+.leaflet-popup-pane {
+  z-index: 700;
+}
+
+/* Custom styling for coordinate marker popups */
+.coordinate-popup .leaflet-popup-content {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding-left: 8px;
+}
+
+/* Dark mode adjustments */
+body.dark-mode {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+body.dark-mode .layer-panel {
+  background: #2a2a2a;
+  color: #eee;
+}
+body.dark-mode #controls {
+  background: #2a2a2a;
+}
+
+/* Dark mode styles for Leaflet controls */
+.leaflet-control.leaflet-control-dark {
+  background: #222 !important;
+  color: #eee !important;
+  border-color: #444 !important;
+}
+
+/* Info bubble */
+.info-bubble {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 300px;
+}
+.info-bubble #infoContent {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 6px;
+}
+body.dark-mode .info-bubble #infoContent {
+  background: rgba(50, 50, 50, 0.95);
+  color: #eee;
+}
