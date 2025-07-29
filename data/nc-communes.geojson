@@ -1,5 +1,14 @@
 {
   "type": "FeatureCollection",
+  "name": "new_caledonia_communes",
+  "crs": { "type": "name", "properties": { "name": "EPSG:4326" } },
+  "metadata": {
+    "schema": {
+      "feature.properties": ["name"],
+      "geometry.type": ["Polygon", "MultiPolygon"],
+      "bbox": "optional"
+    }
+  },
   "features": [
     {
       "type": "Feature",
