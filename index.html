@@ -1,55 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Caledonia Commune Locator</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    <link rel="stylesheet" href="assets/css/styles.css" />
-  </head>
-  <body>
-    <header>
-      <h1>New Caledonia Commune Locator</h1>
-      <p>
-        Enter longitude and latitude below (decimal or degrees/minutes/seconds) or click a commune on the map to learn more.
-      </p>
-      <div class="search-container coord-container">
-        <!-- Longitude (X) input -->
-        <input
-          type="number"
-          id="lonBox"
-          placeholder="Longitude (X)"
-          aria-label="Longitude (X)"
-          step="any"
-        />
-        <!-- Latitude (Y) input -->
-        <input
-          type="number"
-          id="latBox"
-          placeholder="Latitude (Y)"
-          aria-label="Latitude (Y)"
-          step="any"
-        />
-        <!-- Toggle between decimal and DMS -->
-        <button id="toggleFormat" aria-label="Switch coordinate format">°′″</button>
-        <!-- Perform search -->
-        <button id="searchButton" aria-label="Locate coordinates">Search</button>
-        <!-- Copy permalink -->
-        <button id="copyLink" aria-label="Copy shareable link">🔗 Copy Link</button>
-        <!-- Theme toggle -->
-        <button id="themeToggle" aria-label="Switch map theme">🌙</button>
-        <!-- Toggle lazy loading -->
-        <button id="lazyToggle" aria-label="Toggle lazy loading">🐌</button>
-      </div>
-      <div id="a11yMsg" role="status" aria-live="polite"></div>
-    </header>
-    <div id="map"></div>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-pip@1.1.0/leaflet-pip.min.js"></script>
-    <script src="assets/js/communes.js"></script>
-    <script src="assets/js/app.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Caledonia Commune Locator</title>
+  <meta name="description" content="Enter coordinates or commune name to identify the municipality in New Caledonia. Leaflet + point-in-polygon (leaflet-pip)." />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="New Caledonia Commune Locator" />
+  <meta property="og:description" content="Enter coordinates to find the New Caledonia commune (municipality) and visualize its boundary." />
+  <meta property="og:type" content="website" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-cIWQoD0P8zsn6e0aI2c1rXjZk1JfX9+6J3iUuS+Y6pF9U2wO2nU7dWkz9vXJQnL3" crossorigin="anonymous" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <noscript>
+    <style>#map{display:none}.no-js{display:block;padding:1rem;margin:1rem;border:1px solid #bbb;background:#fffbe6}</style>
+  </noscript>
+</head>
+<body>
+  <div class="no-js" aria-live="polite" aria-atomic="true" hidden>
+    This application requires JavaScript to run. Please enable JavaScript and reload the page.
+  </div>
+
+  <!-- Controls overlay -->
+  <div id="controls" role="region" aria-label="Search controls">
+    <input id="searchInput" type="text" inputmode="text" placeholder="lat,lng or commune name" aria-label="Enter coordinates as lat,lng or a commune name" />
+    <button id="searchBtn" type="button" title="Search">Search</button>
+    <button id="clearBtn" type="button" title="Clear selections">Clear</button>
+    <span id="status" class="sr-only" aria-live="polite"></span>
+  </div>
+
+  <!-- Map container -->
+  <div id="map" role="region" aria-label="New Caledonia commune map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-2mF1g2aQ7s5l6n1GkXQ3FQJwQdK6QxPjQ+9dP6vQn2vQZl8g9r7l2zQp5tQw1n8W" crossorigin="anonymous"></script>
+  <!-- leaflet-pip for point-in-polygon -->
+  <script src="https://unpkg.com/leaflet-pip@1.1.0/leaflet-pip.min.js"></script>
+  
+  <!-- App JS -->
+  <script defer src="assets/js/app.js"></script>
+
+  <script>
+    // Hide the no-JS warning now that JS is executing
+    document.querySelector('.no-js')?.setAttribute('hidden', 'hidden');
+  </script>
+</body>
 </html>
