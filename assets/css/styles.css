@@ -1,139 +1,77 @@
-/*
- * Core layout and custom styles for the New Caledonia Commune Locator.
- * These rules extend the original styling to accommodate split coordinate
- * fields, a collapsible information panel, dark‑mode toggle and improved
- * accessibility.  Moving styles out of the HTML improves readability
- * and separates concerns.
- */
+/* ===== Layout ===== */
+html, body, #map { height: 100%; margin: 0; }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* High-contrast focus for accessibility */
+:focus { outline: 2px dashed #333; outline-offset: 2px; }
 
-/* Use a flex column so the header stays at the top and the map fills the rest */
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header styling */
-header {
-  background-color: #f5f5f5;
-  padding: 12px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-header p {
-  margin: 8px 0 12px;
-  font-size: 0.875rem;
-  color: #555;
-}
-
-/* Search container layout */
-.search-container {
+/* Controls panel */
+#controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
-  max-width: 100%;
+  align-items: center;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-/* The new coord-container simply aliases to .search-container for semantic clarity */
-.coord-container {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+#controls input {
+  width: 280px;
+  max-width: 60vw;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #cbd5e1; /* slate-300 */
+  border-radius: 8px;
 }
 
-/* Input styling */
-.search-container input {
-  flex: 1 1 120px;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  min-width: 80px;
+#controls button {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc; /* slate-50 */
+  cursor: pointer;
+}
+#controls button:hover { background: #eef2f7; }
+
+/* Screen-reader only text */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* added line */
 }
 
-/* Button styling */
-.search-container button {
-  padding: 8px 14px;
-  background-color: #007bff;
-  border: none;
+/* Map container */
+#map { position: absolute; inset: 0; }
+
+/* Tooltip style override */
+.leaflet-tooltip.custom-tooltip {
+  background: #ffffff;
+  border: 1px solid #a3a3a3;
+  color: #111827; /* gray-900 */
+  padding: 2px 6px;
+  font-size: 14px;
+}
+
+/* Hover highlight is handled via setStyle in JS; this class is here if you need a CSS-only fallback */
+.feature-hover { outline: 2px solid rgba(251, 146, 60, 0.95); }
+
+/* Toast (lightweight) */
+.toast {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  background: rgba(17,24,39,0.95);
   color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.search-container button:hover {
-  background-color: #0056b3;
-}
-
-/* Map container fills the remaining vertical space */
-#map {
-  flex: 1;
-}
-
-/* Style for custom tooltips used on commune polygons */
-.custom-tooltip {
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 4px 8px;
-  font-size: 0.875rem;
-  color: #000;
-  border-radius: 3px;
-}
-
-/* Highlight style for dynamic highlighting via JS */
-.highlight {
-  fill-color: #ff7800 !important;
-  color: #ff7800 !important;
-}
-
-/* Info box (custom Leaflet control) */
-.info-box {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  padding: 6px;
-  font-size: 0.85rem;
-  line-height: 1.3;
-}
-
-.info-box button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-right: 6px;
-}
-
-#infoPanel {
-  margin-top: 4px;
-  max-width: 260px;
-}
-
-#infoPanel h2 {
-  margin: 0 0 4px;
-  font-size: 1rem;
-}
-
-#infoPanel ol {
-  padding-left: 18px;
-  margin: 0 0 6px;
-}
-
-#infoPanel small {
-  font-size: 0.75rem;
-  color: #666;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  z-index: 1100;
 }
